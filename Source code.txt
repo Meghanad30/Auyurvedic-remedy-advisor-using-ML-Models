@@ -1,0 +1,41 @@
+!pip install transformers
+
+
+!pip install -q transformers
+
+
+!pip install PyPDF2
+
+
+!pip install urllib3
+
+
+from transformers import pipeline
+import urllib.request
+import PyPDF2
+import io
+
+
+pdfdoc_remote = PyPDF2.PdfReader('/content/ayurremedies3.pdf')
+
+
+len(pdfdoc_remote.pages)
+
+
+
+pdf_text = ""
+
+for i in range(len(pdfdoc_remote.pages)):
+    print(i)
+    page = pdfdoc_remote.pages[i]
+    page_content = page.extract_text()
+    pdf_text += page_content
+
+
+
+from transformers import pipeline
+
+qa_model = pipeline("question-answering")
+question = input("Enter Your Question : \n")
+context =  pdf_text
+qa_model(question = question, context = context)
